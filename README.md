@@ -1,3 +1,10 @@
-# Builder Notes - CKB (Nervos Network)
+## CKB Builder Notes
 
-This repository will contain all the important notes, tutorials, example projects and related stuff to refer quickly. It is also a way to track my progress on my learnings :)
+This repository contains important notes, tutorials, example projects, and other reference materials. It also serves as a way to track my learning progress.
+
+### Quick Links
+
+- [CKB Docs](https://docs.nervos.org)
+- [CKB Academy](https://academy.ckb.dev/courses) - learn
+- [CCC Playground](https://docs.ckbccc.com/docs/playground) - play online
+- [CKB Builder Handbook](CKB-Builder-Handbook.md) - dev resources
