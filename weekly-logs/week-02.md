@@ -6,16 +6,18 @@
 
 → Finished _2 Courses_ on _CKB Academy_:
 
-<div style="display: flex; gap: 10px;">
-        <div style="flex: 1; text-align: center;">
-          <img src="../assets/completed-basic-theory-course.png" alt="Completed Basic Theory Course" width="500"/>
-          <p>1. <a href="https://academy.ckb.dev/courses/basic-theory">Basic Theory Course</a></p>
-        </div>
-        <div style="flex: 1; text-align: center;">
-          <img src="../assets/completed-basic-operation-course.png" alt="Completed Basic Operation Course" width="500"/>
-          <p>2. <a href="https://academy.ckb.dev/courses/basic-operation">Basic Operation Course</a></p>
-        </div>
-</div>
+<table style="width:100%; text-align:center;">
+  <tr>
+    <td style="width:50%; vertical-align:top; text-align:center;">
+      <img src="../assets/completed-basic-theory-course.png" alt="Completed Basic Theory Course" width="100%">
+      <p style="text-align:center;">1. <a href="https://academy.ckb.dev/courses/basic-theory">Basic Theory Course</a></p>
+    </td>
+    <td style="width:50%; vertical-align:top; text-align:center;">
+      <img src="../assets/completed-basic-operation-course.png" alt="Completed Basic Operation Course" width="100%">
+      <p style="text-align:center;">2. <a href="https://academy.ckb.dev/courses/basic-operation">Basic Operation Course</a></p>
+    </td>
+  </tr>
+</table>
 
 → Covered these tech-terms by courses & docs:
 
@@ -41,35 +43,36 @@
 
 ### Related Snapshots (for notes)
 
-<div style="display: flex; gap: 10px;">
+<table style="width:100%; text-align:center;">
+  <tr>
+    <td style="width:33.3%; vertical-align:top; text-align:center;">
+      <img src="../assets/capacity-of-a-cell.png" alt="Capacity of a Cell" width="100%">
+      <p style="text-align:center;">Capacity of a Cell</p>
+    </td>
+    <td style="width:33.3%; vertical-align:top; text-align:center;">
+      <img src="../assets/txn-rules.png" alt="Transaction Rules" width="100%">
+      <p style="text-align:center;">Transaction Rules</p>
+    </td>
+    <td style="width:33.3%; vertical-align:top; text-align:center;">
+      <img src="../assets/filled-cell-details.png" alt="Filled Cell Details" width="100%">
+      <p style="text-align:center;">Filled Cell Details</p>
+    </td>
+  </tr>
+</table>
 
-  <div style="flex: 1; text-align: center;">
-    <img src="../assets/capacity-of-a-cell.png" alt="Capacity of a Cell" width="300"/>
-    <p>Capacity of a Cell</p>
-  </div>
+<table style="width:100%; text-align:center;">
+  <tr>
+    <td style="width:50%; vertical-align:top; text-align:center;">
+      <img src="../assets/ckb-address-on-testnet.png" alt="CKB Address on Testnet" width="100%">
+      <p style="text-align:center;">CKB Address on Testnet</p>
+    </td>
+    <td style="width:50%; vertical-align:top; text-align:center;">
+      <img src="../assets/transferred-90ckb.png" alt="Transferred 90 CKB" width="100%">
+      <p style="text-align:center;">Transferred 90 CKB</p>
+    </td>
+  </tr>
+</table>
 
-  <div style="flex: 1; text-align: center;">
-    <img src="../assets/txn-rules.png" alt="Transaction Rules" width="300"/>
-    <p>Transaction Rules</p>
-  </div>
-
-  <div style="flex: 1; text-align: center;">
-    <img src="../assets/filled-cell-details.png" alt="Filled Cell Details" width="300"/>
-    <p>Filled Cell Details</p>
-  </div>
-
-</div>
-
-<div style="display: flex; gap: 10px;">
-  <div style="flex: 1; text-align: center;">
-    <img src="../assets/ckb-address-on-testnet.png" alt="CKB Address on Testnet" width="500"/>
-    <p>CKB Address on Testnet</p>
-  </div>
-  <div style="flex: 1; text-align: center;">
-    <img src="../assets/transferred-90ckb.png" alt="Transferred 90 CKB" width="500"/>
-    <p>Transferred 90 CKB</p>
-  </div>
-</div>
 
 ### Key Learnings
 
