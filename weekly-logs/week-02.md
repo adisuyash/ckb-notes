@@ -4,7 +4,7 @@
 
 ### Tasks Completed
 
-→ Finished _2 Courses_ on _CKB Academy_:
+- Finished _2 Courses_ on _CKB Academy_:
 
 <table style="width:100%; text-align:center;">
   <tr>
@@ -19,7 +19,7 @@
   </tr>
 </table>
 
-→ Covered these tech-terms by courses & docs:
+- Covered these tech-terms by courses & docs:
 
 - [Cell](https://docs.nervos.org/docs/tech-explanation/cell)
 - [CKB (CKByte)](https://www.notion.so/adisuyash/CKByte-1-Byte-2836226f9e0380cda3f2cf0fec53847e) & Shannon (1 CKB = 10^8 shannons)
@@ -27,7 +27,7 @@
 - [CKB vs BTC](https://docs.nervos.org/docs/tech-explanation/ckb-vs-btc)
 - CKB Transaction structure: inputs, outputs, cellDeps, witnesses
 
-→ Learnt basic transaction flow on CKB (creating, destroying, managing cells).
+- Learnt basic transaction flow on CKB (creating, destroying, managing cells).
 
 ### Practical Exercises
 
@@ -73,14 +73,3 @@
   </tr>
 </table>
 
-
-### Key Learnings
-
-- CKB operates as a **chain of cells**, constantly created and destroyed
-- **Ownership of cells** is protected by lock scripts; **type scripts** govern cell transformations
-- Constructing a transaction involves: filling in dependencies, generating tx_hash, signing with lock scripts, serializing witnessArgs, sending on-chain, and verifying status
-- Hands-on practice reinforces the **concept of cells, locks, and transaction lifecycle**
-- Using **Toolbox and Live Cells** simplifies manual transaction creation and reduces errors
-- Understanding the **transaction lifecycle** is essential before moving to advanced tutorials
-
-</details>
