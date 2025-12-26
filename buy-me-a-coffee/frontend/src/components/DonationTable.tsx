@@ -19,8 +19,8 @@ export function DonationTable({ donations }: DonationTableProps) {
             Supporters wall
           </h2>
           <p className="mt-1 text-xs text-slate-400">
-            Recent coffees from your supporters. In later steps this will be
-            populated from on-chain data.
+            Recent coffees from your supporters. Soon this will be populated
+            from real on-chain data.
           </p>
         </div>
       </div>

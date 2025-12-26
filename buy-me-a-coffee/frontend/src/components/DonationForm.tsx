@@ -47,8 +47,8 @@ export function DonationForm({
       nextErrors.amount = "Amount is required.";
     } else if (Number.isNaN(numericAmount)) {
       nextErrors.amount = "Amount must be a number.";
-    } else if (numericAmount <= 0) {
-      nextErrors.amount = "Amount must be greater than 0 CKB.";
+    } else if (numericAmount < 50) {
+      nextErrors.amount = "Minimum donation is 50 CKB.";
     }
 
     setErrors(nextErrors);
@@ -82,8 +82,8 @@ export function DonationForm({
         Buy me a coffee
       </h2>
       <p className="mt-1 text-xs text-slate-400">
-        Enter your name, a short message, and how many CKB you want to send. In
-        later steps this will create an on-chain donation.
+        Enter your name, a short message, and how many CKB you want to send.
+        Submitting will create an on-chain donation on the CKB testnet.
       </p>
 
       <form
@@ -154,7 +154,7 @@ export function DonationForm({
               id="amount"
               name="amount"
               type="number"
-              min={0}
+              min={50}
               step="0.00000001"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
@@ -174,8 +174,7 @@ export function DonationForm({
 
         {disabled && (
           <p className="text-xs text-amber-300">
-            The form will be enabled once a wallet is connected in{" "}
-            <span className="font-semibold">Step 3</span>.
+            Connect a CKB wallet above to enable the donation form.
           </p>
         )}
 
@@ -184,7 +183,7 @@ export function DonationForm({
           disabled={disabled}
           className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-emerald-500 px-4 py-2 text-sm font-semibold text-slate-950 shadow hover:bg-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 disabled:cursor-not-allowed disabled:bg-slate-800 disabled:text-slate-400"
         >
-          Preview donation
+          Send donation
         </button>
       </form>
     </section>
