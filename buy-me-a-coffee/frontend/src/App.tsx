@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ccc } from "@ckb-ccc/connector-react";
 import { WalletStatus } from "./components/WalletStatus";
 import { DonationForm } from "./components/DonationForm";
@@ -15,6 +15,7 @@ function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [donations, setDonations] = useState<Donation[]>([]);
   const [donationsError, setDonationsError] = useState<string | null>(null);
+  const [isDonationsLoading, setIsDonationsLoading] = useState(false);
 
   useEffect(() => {
     if (!signer) {
@@ -41,43 +42,35 @@ function App() {
     };
   }, [signer]);
 
-  useEffect(() => {
-    let cancelled = false;
-
-    async function fetchDonations() {
-      try {
-        setDonationsError(null);
-        const response = await fetch("http://localhost:4000/api/donations");
-        if (!response.ok) {
-          throw new Error(`Failed to load donations (${response.status})`);
-        }
-        const body = await response.json();
-        const items = (body?.donations ?? []) as Donation[];
-
-        if (!cancelled) {
-          setDonations(
-            items
-              .slice()
-              .sort(
-                (a, b) =>
-                  new Date(b.time).getTime() - new Date(a.time).getTime()
-              )
-          );
-        }
-      } catch (error) {
-        if (!cancelled) {
-          console.error("Failed to load donations", error);
-          setDonationsError("Failed to load recent donations.");
-        }
+  const fetchDonations = useCallback(async () => {
+    setDonationsError(null);
+    setIsDonationsLoading(true);
+    try {
+      const response = await fetch("http://localhost:4000/api/donations");
+      if (!response.ok) {
+        throw new Error(`Failed to load donations (${response.status})`);
       }
+      const body = await response.json();
+      const items = (body?.donations ?? []) as Donation[];
+
+      setDonations(
+        items
+          .slice()
+          .sort(
+            (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
+          )
+      );
+    } catch (error) {
+      console.error("Failed to load donations", error);
+      setDonationsError("Failed to load recent donations.");
+    } finally {
+      setIsDonationsLoading(false);
     }
-
-    fetchDonations();
-
-    return () => {
-      cancelled = true;
-    };
   }, []);
+
+  useEffect(() => {
+    fetchDonations();
+  }, [fetchDonations]);
 
   const isConnected = !!wallet && !!address;
 
@@ -201,7 +194,11 @@ function App() {
           </div>
 
           <div className="flex flex-col">
-            <DonationTable donations={donations} />
+            <DonationTable
+              donations={donations}
+              onRefresh={fetchDonations}
+              refreshing={isDonationsLoading}
+            />
             {donationsError && (
               <p className="mt-2 text-xs text-rose-400">{donationsError}</p>
             )}

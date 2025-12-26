@@ -1,36 +1,16 @@
 import { Router, type Request, type Response } from "express";
+import { fetchRecentDonations } from "../services/indexer";
 
 export const donationsRouter = Router();
 
-donationsRouter.get("/donations", (_req: Request, res: Response) => {
-  const mockDonations = [
-    {
-      id: 3,
-      name: "Alice",
-      message: "Keep building on CKB!",
-      amountCkb: 150,
-      time: "2025-01-01T12:00:00.000Z",
-      txHash: "0xmockalice",
-    },
-    {
-      id: 2,
-      name: "Bob",
-      message: "Love this project.",
-      amountCkb: 80,
-      time: "2025-01-01T11:45:00.000Z",
-      txHash: "0xmockbob",
-    },
-    {
-      id: 1,
-      name: "Charlie",
-      message: "Coffee on me ☕",
-      amountCkb: 50,
-      time: "2025-01-01T11:00:00.000Z",
-      txHash: "0xmockcharlie",
-    },
-  ];
-
-  res.json({ donations: mockDonations });
+donationsRouter.get("/donations", async (_req: Request, res: Response) => {
+  try {
+    const donations = await fetchRecentDonations(20);
+    res.json({ donations });
+  } catch (error) {
+    console.error("Failed to fetch donations", error);
+    res.status(500).json({ error: "Failed to fetch donations" });
+  }
 });
 
 export default donationsRouter;
