@@ -19,15 +19,15 @@ export function DonationTable({
   refreshing,
 }: DonationTableProps) {
   return (
-    <section className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 shadow-sm">
+    <section className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 shadow-sm transition-all duration-200 hover:border-emerald-400/60 hover:shadow-lg hover:shadow-emerald-500/10">
       <div className="flex items-center justify-between gap-2">
         <div>
           <h2 className="text-sm font-semibold tracking-wide text-slate-200">
             Supporters wall
           </h2>
           <p className="mt-1 text-xs text-slate-400">
-            Recent coffees from your supporters. Soon this will be populated
-            from real on-chain data.
+            Recent coffees from your supporters, fetched directly from the
+            CKB blockchain.
           </p>
         </div>
         {onRefresh && (
@@ -78,7 +78,7 @@ export function DonationTable({
         <div className="divide-y divide-slate-800 bg-slate-950/60">
           {donations.length === 0 ? (
             <p className="px-3 py-4 text-center text-xs text-slate-500">
-              No coffees yet. Be the first to support this builder!
+              No coffees yet. Be the first to support this creator!
             </p>
           ) : (
             donations.map((donation) => {

@@ -1,6 +1,7 @@
 import { ccc } from "@ckb-ccc/shell";
 
 const DONATION_RECEIVER_ADDRESS =
+  process.env.DONATION_RECEIVER_ADDRESS ||
   "ckt1qrejnmlar3r452tcg57gvq8patctcgy8acync0hxfnyka35ywafvkqgjyfw45yrezg066pg2xw7lzdem4ac65sseqqlj2cvk";
 
 const cccAny = ccc as any;

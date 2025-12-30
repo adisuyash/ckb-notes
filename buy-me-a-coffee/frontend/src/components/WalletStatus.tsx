@@ -15,7 +15,7 @@ export function WalletStatus({
   onConnectClick,
 }: WalletStatusProps) {
   return (
-    <section className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 shadow-sm">
+    <section className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 shadow-sm transition-all duration-200 hover:border-emerald-400/60 hover:shadow-lg hover:shadow-emerald-500/10">
       <div className="flex items-center justify-between gap-4">
         <div>
           <h2 className="text-sm font-semibold tracking-wide text-slate-200">
