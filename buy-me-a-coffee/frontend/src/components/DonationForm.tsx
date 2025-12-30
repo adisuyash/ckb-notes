@@ -1,4 +1,9 @@
-import { FormEvent, useState } from "react";
+import {
+  FormEvent,
+  useState,
+  type ChangeEvent,
+  type KeyboardEvent,
+} from "react";
 
 type DonationFormProps = {
   disabled?: boolean;
@@ -47,8 +52,9 @@ export function DonationForm({
       nextErrors.amount = "Amount is required.";
     } else if (Number.isNaN(numericAmount)) {
       nextErrors.amount = "Amount must be a number.";
-    } else if (numericAmount < 50) {
-      nextErrors.amount = "Minimum donation is 50 CKB.";
+    } else if (numericAmount < 100) {
+      nextErrors.amount =
+        "Minimum donation is 100 CKB to cover cell creation costs.";
     }
 
     setErrors(nextErrors);
@@ -95,16 +101,29 @@ export function DonationForm({
 
   const PRESET_AMOUNTS = [100, 1000, 10000];
 
+  function handleAmountChange(event: ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value;
+    setAmount(value);
+
+    if (submittedOnce) {
+      validate();
+    }
+  }
+
+  function handleAmountKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "ArrowDown") {
+      const current = Number(amount);
+      if (!Number.isNaN(current) && current <= 100) {
+        event.preventDefault();
+      }
+    }
+  }
+
   return (
     <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-lg transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-xl">
       <h2 className="text-sm font-semibold tracking-wide text-slate-900">
-        Buy a coffee
+        Buy me a coffee
       </h2>
-      <p className="mt-1 text-xs text-slate-600">
-        Share your name, a short note, and how many coffees you'd like to
-        send. Your support and message will appear on the public supporters
-        wall.
-      </p>
 
       <form
         onSubmit={handleSubmit}
@@ -114,7 +133,7 @@ export function DonationForm({
         <div className="space-y-1.5">
           <label
             htmlFor="name"
-            className="block text-xs font-medium text-slate-200"
+            className="block text-xs font-medium text-slate-700"
           >
             Name
           </label>
@@ -139,7 +158,7 @@ export function DonationForm({
         <div className="space-y-1.5">
           <label
             htmlFor="message"
-            className="block text-xs font-medium text-slate-200"
+            className="block text-xs font-medium text-slate-700"
           >
             Message
           </label>
@@ -165,7 +184,7 @@ export function DonationForm({
         <div className="space-y-1.5">
           <label
             htmlFor="amount"
-            className="block text-xs font-medium text-slate-200"
+            className="block text-xs font-medium text-slate-700"
           >
             Amount (CKB)
           </label>
@@ -174,12 +193,17 @@ export function DonationForm({
               id="amount"
               name="amount"
               type="number"
-              min={50}
+              min={100}
               step="0.00000001"
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={handleAmountChange}
+              onKeyDown={handleAmountKeyDown}
               disabled={disabled}
-              className="block w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 pr-14 text-sm text-slate-900 shadow-sm outline-none ring-0 placeholder:text-slate-400 focus:border-sky-500 focus:ring-2 focus:ring-sky-500 disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-100"
+              className={`block w-full rounded-xl border bg-slate-50 px-3 py-2 pr-14 text-sm text-slate-900 shadow-sm outline-none ring-0 placeholder:text-slate-400 focus:ring-2 disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-100 ${
+                errors.amount
+                  ? "border-rose-400 focus:border-rose-400 focus:ring-rose-400"
+                  : "border-slate-200 focus:border-sky-500 focus:ring-sky-500"
+              }`}
               placeholder="100"
               required
             />
@@ -211,8 +235,8 @@ export function DonationForm({
 
         {disabled && (
           <p className="text-xs text-amber-600">
-            Connect a CKB wallet using the button in the top-right to enable
-            the donation form.
+            Connect a CKB wallet using the button in the top-right to enable the
+            donation form.
           </p>
         )}
 

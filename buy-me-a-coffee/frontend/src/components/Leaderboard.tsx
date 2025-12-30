@@ -49,23 +49,20 @@ export function Leaderboard({
   }, [donations]);
 
   return (
-    <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-lg">
+    <section className="w-full max-w-4xl rounded-3xl border border-slate-200 bg-white px-4 py-5 shadow-lg sm:px-8 sm:py-6">
       <div className="mb-4 flex items-center justify-between gap-3">
         <div>
-          <h2 className="text-sm font-semibold tracking-wide text-slate-900">
+          <h2 className="text-base font-medium text-slate-800 sm:text-lg">
             Top supporters
           </h2>
-          <p className="text-xs text-slate-600">
-            Ranked by total CKB donated using the name they entered.
-          </p>
         </div>
         <button
           type="button"
           onClick={onRefresh}
           disabled={isLoading}
-          className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-medium text-slate-700 shadow-sm transition-colors hover:border-sky-500 hover:text-sky-700 disabled:cursor-not-allowed disabled:border-slate-200 disabled:text-slate-400"
+          className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition-colors hover:border-sky-500 hover:text-sky-700 disabled:cursor-not-allowed disabled:border-slate-200 disabled:text-slate-400"
         >
-          <span>Refresh</span>
+          <span>Refresh List</span>
           <svg
             className={`h-3 w-3 ${isLoading ? "animate-spin" : ""}`}
             viewBox="0 0 20 20"
@@ -90,24 +87,22 @@ export function Leaderboard({
         </button>
       </div>
 
-      {error && (
-        <p className="mb-3 text-xs text-rose-400">{error}</p>
-      )}
+      {error && <p className="mb-3 text-xs text-rose-400">{error}</p>}
 
       {isLoading && !entries.length ? (
-        <div className="mt-2 space-y-2">
-          <div className="h-10 animate-pulse rounded-lg bg-slate-100" />
-          <div className="h-10 animate-pulse rounded-lg bg-slate-100" />
-          <div className="h-10 animate-pulse rounded-lg bg-slate-100" />
+        <div className="mt-4 space-y-3">
+          <div className="h-11 animate-pulse rounded-lg bg-slate-100" />
+          <div className="h-11 animate-pulse rounded-lg bg-slate-100" />
+          <div className="h-11 animate-pulse rounded-lg bg-slate-100" />
         </div>
       ) : entries.length === 0 ? (
-        <p className="mt-2 text-xs text-slate-600">
+        <p className="mt-2 text-sm text-slate-600">
           No supporters yet. Once people start donating, the top supporters will
           appear here.
         </p>
       ) : (
-        <div className="mt-3 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-          <div className="grid grid-cols-[3rem_2fr_auto_auto] items-center gap-3 border-b border-slate-200 bg-slate-100 px-4 py-2 text-[11px] font-semibold text-slate-600">
+        <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+          <div className="grid grid-cols-[3rem_2fr_auto_auto] items-center gap-3 border-b border-slate-200 bg-slate-100 px-5 py-2.5 text-xs font-semibold text-slate-600 sm:text-sm">
             <div>Rank</div>
             <div>Name</div>
             <div className="text-right">Total donated</div>
@@ -121,7 +116,7 @@ export function Leaderboard({
               return (
                 <div
                   key={entry.name}
-                  className={`grid grid-cols-[3rem_2fr_auto_auto] items-center gap-3 px-4 py-2 text-[11px] ${
+                  className={`grid grid-cols-[3rem_2fr_auto_auto] items-center gap-3 px-5 py-2.5 text-xs sm:text-sm ${
                     isTop
                       ? "bg-sky-100 text-slate-900"
                       : "bg-slate-50 text-slate-800"
@@ -136,9 +131,7 @@ export function Leaderboard({
                     })}{" "}
                     CKB
                   </div>
-                  <div className="text-right text-slate-500">
-                    {entry.count}
-                  </div>
+                  <div className="text-right text-slate-500">{entry.count}</div>
                 </div>
               );
             })}

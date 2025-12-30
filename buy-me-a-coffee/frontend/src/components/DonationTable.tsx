@@ -26,8 +26,8 @@ export function DonationTable({
             Supporters wall
           </h2>
           <p className="mt-1 text-xs text-slate-400">
-            Recent coffees from your supporters, fetched directly from the
-            CKB blockchain.
+            Recent coffees from your supporters, fetched directly from the CKB
+            blockchain.
           </p>
         </div>
         {onRefresh && (

@@ -22,12 +22,17 @@ function formatRelativeTime(isoTime: string): string {
   return `${diffDays}d ago`;
 }
 
-export function DonationCarousel({ donations, isLoading }: DonationCarouselProps) {
+export function DonationCarousel({
+  donations,
+  isLoading,
+}: DonationCarouselProps) {
   const items = useMemo(
     () =>
       donations
         .slice()
-        .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()),
+        .sort(
+          (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
+        ),
     [donations]
   );
 
@@ -39,7 +44,7 @@ export function DonationCarousel({ donations, isLoading }: DonationCarouselProps
     if (!container) return;
 
     let frameId: number;
-    const speed = 0.4; // px per frame
+    const speed = 0.5; // px per frame
 
     const step = () => {
       if (!container) return;

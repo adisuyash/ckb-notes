@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { ccc } from "@ckb-ccc/connector-react";
 import { DonationForm } from "./components/DonationForm";
-import { DonationTable, type Donation } from "./components/DonationTable";
+import type { Donation } from "./components/DonationTable";
 import { DonationCarousel } from "./components/DonationCarousel";
 import { Leaderboard } from "./components/Leaderboard";
 
 const cccAny = ccc as any;
 
 const envApiBase =
-  (((import.meta as any)?.env?.VITE_API_BASE_URL as string | undefined) ?? "");
+  ((import.meta as any)?.env?.VITE_API_BASE_URL as string | undefined) ?? "";
 
 let defaultApiBase = "http://localhost:4000";
 if (typeof window !== "undefined") {
@@ -19,9 +19,7 @@ if (typeof window !== "undefined") {
 }
 
 const API_BASE_URL =
-  envApiBase && envApiBase.trim() !== ""
-    ? envApiBase.trim()
-    : defaultApiBase;
+  envApiBase && envApiBase.trim() !== "" ? envApiBase.trim() : defaultApiBase;
 
 function App() {
   const cccCtx = ccc.useCcc() as any;
@@ -112,21 +110,18 @@ function App() {
     let success = false;
 
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/create-donation-tx`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            donorAddress: address,
-            amountCkb: formData.amountCkb,
-            name: formData.name,
-            message: formData.message,
-          }),
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/api/create-donation-tx`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          donorAddress: address,
+          amountCkb: formData.amountCkb,
+          name: formData.name,
+          message: formData.message,
+        }),
+      });
 
       if (!response.ok) {
         let errorMessage = "Failed to prepare donation transaction.";
@@ -198,17 +193,19 @@ function App() {
 
   return (
     <div className="min-h-screen bg-sky-100 text-slate-900">
-      <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-6">
+      <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-4 py-6">
         <nav className="flex items-center justify-between rounded-full bg-sky-100/80 px-4 py-2 text-sm shadow-sm ring-1 ring-sky-200/80">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-900 text-sm font-semibold text-white">
-              C
-            </div>
-            <span className="text-xs font-semibold tracking-wide text-slate-800">
+          <button
+            type="button"
+            onClick={() => setActiveView("support")}
+            className="flex items-center gap-2 rounded-full px-2 py-1 transition-colors hover:bg-sky-100"
+          >
+            <img src="/main.svg" alt="CKB Coffee logo" className="h-8 w-8" />
+            <span className="text-sm font-semibold tracking-wide text-slate-800">
               CKB Coffee
             </span>
-          </div>
-          <div className="hidden items-center gap-5 text-[11px] font-medium text-slate-700 sm:flex">
+          </button>
+          <div className="hidden items-center gap-6 text-sm font-medium text-slate-700 sm:flex">
             <button
               type="button"
               onClick={() => setActiveView("support")}
@@ -268,12 +265,59 @@ function App() {
           )}
         </nav>
 
+        {lastTxHash && (
+          <div
+            className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm"
+            onClick={() => setLastTxHash(null)}
+          >
+            <div
+              className="relative mx-4 w-full max-w-md rounded-3xl bg-emerald-50/95 p-5 shadow-2xl ring-1 ring-emerald-100"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={() => setLastTxHash(null)}
+                className="absolute right-3 top-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-emerald-600 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-emerald-500"
+                aria-label="Close"
+              >
+                X
+              </button>
+
+              <div className="mt-2 flex flex-col items-center gap-4">
+                <div className="relative flex h-24 w-32 items-center justify-center overflow-hidden rounded-2xl p-1 bg-emerald-100">
+                  <img
+                    src="/thankyou.svg"
+                    alt="Thank you for your support"
+                    className="relative h-full w-full object-contain"
+                  />
+                </div>
+                <div className="w-full text-center">
+                  <p className="text-sm font-semibold text-emerald-700">
+                    Thank you so much!
+                  </p>
+                  <p className="mt-1 text-xs text-slate-700">
+                    Your donation was sent successfully. <br />
+                  </p>
+                  <a
+                    href={`https://testnet.explorer.nervos.org/transaction/${lastTxHash}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-flex text-[11px] font-mono text-sky-700 underline decoration-dotted underline-offset-2 hover:text-sky-600"
+                  >
+                    Click here to view transaction &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         <main className="mt-8 flex flex-1 flex-col items-center">
           <header className="text-center">
             {activeView === "support" ? (
               <>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-700">
-                  Together we've raised
+                  Raised so far
                 </p>
                 <p className="mt-2 text-4xl font-bold text-slate-900">
                   {totalRaised.toLocaleString(undefined, {
@@ -283,8 +327,7 @@ function App() {
                   CKB
                 </p>
                 <p className="mt-2 text-sm text-slate-700">
-                  Support this creator with a CKB "coffee" and a public
-                  message. Your support appears on the live feed below.
+                  Send a CKB “coffee” and leave a public message of support.
                 </p>
               </>
             ) : (
@@ -302,22 +345,10 @@ function App() {
             )}
           </header>
 
-        {lastTxHash && (
-          <p className="mt-3 text-xs text-emerald-300">
-            Last donation transaction hash:{" "}
-            <a
-              href={`https://testnet.explorer.nervos.org/transaction/${lastTxHash}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline decoration-dotted underline-offset-2 hover:text-emerald-200"
-            >
-              {lastTxHash}
-            </a>
-          </p>
-        )}
-        {submitError && (
-          <p className="mt-3 text-xs text-rose-400">{submitError}</p>
-        )}
+          {submitError && (
+            <p className="mt-3 text-xs text-rose-400">{submitError}</p>
+          )}
+
           {activeView === "support" ? (
             <section className="mt-8 flex w-full flex-1 flex-col items-center">
               <div className="w-full max-w-md">
@@ -329,16 +360,20 @@ function App() {
 
               <section className="mt-8 w-full">
                 <div className="flex items-center justify-between px-1 text-xs text-slate-700">
-                  <span>Recent supporters</span>
+                  <span className="text-sm font-medium text-slate-700">
+                    Recent supporters
+                  </span>
                   <button
                     type="button"
                     onClick={fetchDonations}
                     disabled={isDonationsLoading}
                     className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1 text-[11px] font-medium text-slate-700 shadow-sm transition-colors hover:border-sky-400 hover:text-sky-700 disabled:cursor-not-allowed disabled:border-slate-200 disabled:text-slate-400"
                   >
-                    <span>Refresh</span>
+                    <span className="text-xs font-medium text-slate-700">
+                      Refresh
+                    </span>
                     <svg
-                      className={`h-3 w-3 ${
+                      className={`h-3.5 w-3.5 ${
                         isDonationsLoading ? "animate-spin" : ""
                       }`}
                       viewBox="0 0 20 20"
@@ -375,7 +410,7 @@ function App() {
               </section>
             </section>
           ) : (
-            <section className="mt-8 flex w-full max-w-3xl flex-1">
+            <section className="mt-10 flex w-full flex-1 justify-center">
               <Leaderboard
                 donations={donations}
                 isLoading={isDonationsLoading}
@@ -385,6 +420,18 @@ function App() {
             </section>
           )}
         </main>
+        <footer className="mt-8 flex justify-center border-t border-sky-200 pt-4 text-xs text-slate-500">
+          <span>
+            Built by{" "}
+            <a
+              href="https://x.com/adisuyash"
+              className="hover:text-sky-700 hover:shadow-sm"
+            >
+              @adisuyash
+            </a>
+            {" :)"}
+          </span>
+        </footer>
       </div>
     </div>
   );
