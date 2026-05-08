@@ -8,7 +8,7 @@ This repository contains important notes, tutorials, example projects, and other
 - [CKB Academy](https://academy.ckb.dev/courses) - learn
 - [CCC Playground](https://docs.ckbccc.com/docs/playground) - play online
 - [CKB Builder Handbook](CKB-Builder-Handbook.md) - more dev resources
-- [CKB Bounty Board](https://www.ckbrewards.org/) - apply 😉
+- [CKB Bounty Board](https://www.ckbrewards.org/) - explore
 
 ### Extra Links
 
